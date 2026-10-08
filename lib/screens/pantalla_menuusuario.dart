@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/pantalla_evento.dart';
 // Importaciones de tus pantallas
 import 'pantalla_registro.dart';
 import 'inventario_partituras.dart';
@@ -36,35 +37,35 @@ class MenuUsuario extends StatelessWidget {
                   );
                 },
               ),
-// 2. Inventario Instrumentos
-ListTile(
-  leading: const Icon(Icons.music_note, color: Colors.white),
-  title: const Text('Inventario- Instrumentos', style: estiloTextoMenu),
-  onTap: () {
-    Navigator.pop(context); // Cierra el menú lateral
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const InventarioInstrumentos(),
-      ),
-    );
-  },
-), 
+            // 2. Inventario Instrumentos
+            ListTile(
+              leading: const Icon(Icons.music_note, color: Colors.white),
+              title: const Text('Inventario- Instrumentos', style: estiloTextoMenu),
+              onTap: () {
+                Navigator.pop(context); // Cierra el menú lateral
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const InventarioInstrumentos(),
+                  ),
+                );
+              },
+            ), 
 
-// 3. Inventario Partituras
-ListTile(
-  leading: const Icon(Icons.music_note, color: Colors.white),
-  title: const Text('Inventario- Partituras', style: estiloTextoMenu),
-  onTap: () {
-    Navigator.pop(context); // Cierra el menú lateral
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const InventarioPartituras(),
-      ),
-    );
-  },
-), 
+            // 3. Inventario Partituras
+            ListTile(
+              leading: const Icon(Icons.music_note, color: Colors.white),
+              title: const Text('Inventario- Partituras', style: estiloTextoMenu),
+              onTap: () {
+                Navigator.pop(context); // Cierra el menú lateral
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const InventarioPartituras(),
+                  ),
+                );
+              },
+            ), 
 
               // 4. Multimedia
               ListTile(
@@ -82,7 +83,12 @@ ListTile(
                 title: const Text('Eventos', style: estiloTextoMenu),
                 onTap: () {
                   Navigator.pop(context);
-                  // Agrega Navigator.push aquí cuando tengas la pantalla
+                      Navigator.push(
+                     context,
+                 MaterialPageRoute(
+                   builder: (context) => const PantallaEventos(),
+                 ),
+                );
                 },
               ),
 
