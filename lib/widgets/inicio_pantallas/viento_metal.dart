@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/widgets/fondos.dart';
+import 'package:frontend/widgets/inicio_pantallas/intrumentos-metal/bombardino.dart';
+import 'package:frontend/widgets/inicio_pantallas/intrumentos-metal/corneta.dart';
+import 'package:frontend/widgets/inicio_pantallas/intrumentos-metal/fliscorno.dart';
+import 'package:frontend/widgets/inicio_pantallas/intrumentos-metal/trombon.dart';
+import 'package:frontend/widgets/inicio_pantallas/intrumentos-metal/tuba.dart';
 import 'intrumentos-metal/trompeta.dart';
 
 // Importación de componentes de los instrumentos de viento metal
@@ -50,6 +55,16 @@ class VientoMetalPantalla extends StatelessWidget {
                           children: [
                             // 1. Trompeta
                             TrompetaItem(),
+                            //2. Fliscorno
+                            FliscornoItem(),
+                            //3. tuba
+                            TubaItem(),
+                            //4. Trombon
+                            TrombonItem(),
+                            //5. Corneta
+                            CornetaItem(),
+                            //6. bombardino
+                            BombardinoItem(),
                           ],
                         ),
                       ),

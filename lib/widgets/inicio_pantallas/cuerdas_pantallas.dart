@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import '../fondos.dart';
+import 'package:frontend/widgets/fondos.dart';
+
+// Importación de componentes de instrumentos de cuerda
+import 'instrumentos-cuerda/violin.dart';
+import 'instrumentos-cuerda/viola.dart';
+import 'instrumentos-cuerda/violonchelo.dart';
+import 'instrumentos-cuerda/contrabajo.dart';
 
 class CuerdasPantalla extends StatelessWidget {
   const CuerdasPantalla({super.key});
-
-  final List<String> instrumentos = const [
-    'Violín',
-    'Viola',
-    'Violonchelo',
-    'Contrabajo',
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -18,67 +17,53 @@ class CuerdasPantalla extends StatelessWidget {
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             child: Container(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
-                color: const Color(0xFF0D1E1C).withOpacity(0.9),
-                borderRadius: BorderRadius.circular(16.0),
+                color: const Color(0xFF0D1E1C).withOpacity(0.92),
+                borderRadius: BorderRadius.circular(20.0),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   IconButton(
                     icon: const Icon(Icons.arrow_back, color: Colors.orange, size: 30),
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                   ),
                   const SizedBox(height: 10),
 
-                  Theme(
-                    data: ThemeData(dividerColor: Colors.transparent),
-                    child: ExpansionTile(
-                      initiallyExpanded: true,
-                      iconColor: Colors.white,
-                      collapsedIconColor: Colors.white,
-                      tilePadding: EdgeInsets.zero,
-                      title: const Text(
-                        "Cuerda",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 22,
-                          fontFamily: 'Serif',
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Theme(
+                        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+                        child: const ExpansionTile(
+                          iconColor: Colors.white,
+                          collapsedIconColor: Colors.white,
+                          title: Text(
+                            "Cuerdas",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 22,
+                              fontFamily: 'Serif',
+                            ),
+                          ),
+                          children: [
+                            // 1. Violín
+                            ViolinItem(),
+                            // 2. Viola
+                            ViolaItem(),
+                            // 3. Violonchelo
+                            VioloncheloItem(),
+                            // 4. Contrabajo
+                            ContrabajoItem(),
+                          ],
                         ),
                       ),
-                      children: instrumentos.map((item) {
-                        return Padding(
-                          padding: const EdgeInsets.only(left: 16.0),
-                          child: ExpansionTile(
-                            iconColor: Colors.white,
-                            collapsedIconColor: Colors.white,
-                            tilePadding: EdgeInsets.zero,
-                            title: Text(
-                              item,
-                              style: const TextStyle(
-                                color: Colors.white70,
-                                fontSize: 17,
-                                fontFamily: 'Serif',
-                              ),
-                            ),
-                            children: const [
-                              Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Text(
-                                  "Detalles del instrumento...",
-                                  style: TextStyle(color: Colors.white54),
-                                ),
-                              )
-                            ],
-                          ),
-                        );
-                      }).toList(),
                     ),
                   ),
-
-                  const Spacer(),
 
                   const Center(
                     child: Text(
@@ -86,11 +71,11 @@ class CuerdasPantalla extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Color(0xFFD3A456),
-                        fontSize: 16,
+                        fontSize: 13,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 
-class TrompetaItem extends StatefulWidget {
-  const TrompetaItem({super.key});
+class TrombonItem extends StatefulWidget {
+  const TrombonItem({super.key});
 
   @override
-  State<TrompetaItem> createState() => _TrompetaItemState();
+  State<TrombonItem> createState() => _TrombonItemState();
 }
 
-class _TrompetaItemState extends State<TrompetaItem> {
+class _TrombonItemState extends State<TrombonItem> {
   late AudioPlayer _audioPlayer;
   bool estaReproduciendo = false;
   Duration duracionTotal = Duration.zero;
