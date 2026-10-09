@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/eventos/pantalla_evento.dart';
 import 'package:frontend/screens/inventario-instrumentos/inventario_instrumentos.dart';
 import 'package:frontend/screens/inventario-partituras/inventario_partituras.dart';
 import 'package:frontend/screens/multimedia/multimedia.dart';
@@ -34,7 +35,8 @@ class MenuUsuario extends StatelessWidget {
                     const InventarioPartituras()),
                 _item(context, 'Multimedia', 
                     const MultimediaPantalla()),
-                _item(context, 'Eventos', null),
+                _item(context, 'Eventos',
+                    const PantallaEventos()),
                 _item(context, 'Perfil', null),
               ],
             ),

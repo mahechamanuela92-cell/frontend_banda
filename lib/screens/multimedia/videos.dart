@@ -5,12 +5,7 @@ class VideosPantalla extends StatelessWidget {
   const VideosPantalla({super.key});
 
   final List<String> videosMiniautras = const [
-    'https://picsum.photos/600/600?random=10',
-    'https://picsum.photos/600/600?random=11',
-    'https://picsum.photos/600/600?random=12',
-    'https://picsum.photos/600/600?random=13',
-    'https://picsum.photos/600/600?random=14',
-    'https://picsum.photos/600/600?random=15',
+
   ];
 
   void _verVideoGrande(BuildContext context, String url) {
