@@ -54,7 +54,7 @@ class _PantallaPerfilState extends State<PantallaPerfil> {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: Colores.botonClaro,
-          foregroundColor: Colors.black87,
+          foregroundColor: Colors.black.withValues(alpha: 0.75),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         ),
         onPressed: onTap,
@@ -90,10 +90,10 @@ class _PantallaPerfilState extends State<PantallaPerfil> {
                       child: SingleChildScrollView(
                         child: Container(
                           width: double.infinity,
-                          margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                            margin: const EdgeInsets.all(12),
                           padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 40),
                           decoration: BoxDecoration(
-                            color: Colores.bloqueOscuro, // mismo color de Eventos
+                            color: Colors.black.withValues(alpha: 0.75), // mismo color de Eventos
                             borderRadius: BorderRadius.circular(28),
                           ),
                           child: Column(
