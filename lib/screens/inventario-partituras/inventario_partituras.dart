@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
-import '../themes/colores.dart';
-import '../widgets/fondos.dart';
+import '../../themes/colores.dart';
+import '../../widgets/fondos.dart';
 
 class InventarioPartituras extends StatefulWidget {
   const InventarioPartituras({super.key});

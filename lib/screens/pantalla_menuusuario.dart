@@ -1,8 +1,10 @@
+
 import 'package:flutter/material.dart';
-import 'package:frontend/screens/pantalla_evento.dart';
+import 'package:frontend/screens/eventos/pantalla_evento.dart';
+// Importaciones de tus pantallas
 import 'pantalla_registro.dart';
-import 'inventario_partituras.dart';
-import 'inventario_instrumentos.dart';
+import 'inventario-partituras/inventario_partituras.dart';
+import 'inventario-instrumentos/inventario_instrumentos.dart';
 
 class MenuUsuario extends StatelessWidget {
   const MenuUsuario({super.key});
