@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/screens/inventario_instrumentos.dart';
-import 'package:frontend/screens/inventario_partituras.dart';
+import 'package:frontend/screens/inventario-instrumentos/inventario_instrumentos.dart';
+import 'package:frontend/screens/inventario-partituras/inventario_partituras.dart';
+import 'package:frontend/screens/multimedia/multimedia.dart';
 import 'package:frontend/screens/pantalla_registro.dart';
 
 class MenuUsuario extends StatelessWidget {
@@ -23,7 +24,7 @@ class MenuUsuario extends StatelessWidget {
               borderRadius: BorderRadius.circular(24),
             ),
             child: Column(
-              mainAxisSize: MainAxisSize.min, // alto = contenido
+              mainAxisSize: MainAxisSize.min, 
               children: [
                 _item(context, 'Registrar Integrante',
                     const PantallaRegistro()),
@@ -31,7 +32,8 @@ class MenuUsuario extends StatelessWidget {
                     const InventarioInstrumentos()),
                 _item(context, 'Inventario- Partituras',
                     const InventarioPartituras()),
-                _item(context, 'Multimedia', null),
+                _item(context, 'Multimedia', 
+                    const MultimediaPantalla()),
                 _item(context, 'Eventos', null),
                 _item(context, 'Perfil', null),
               ],

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../themes/colores.dart';
-import '../widgets/fondos.dart';
+import '../../themes/colores.dart';
+import '../../widgets/fondos.dart';
 
 class PantallaEventos extends StatefulWidget {
   const PantallaEventos({super.key});

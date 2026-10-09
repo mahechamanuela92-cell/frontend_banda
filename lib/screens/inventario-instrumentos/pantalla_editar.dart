@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../themes/colores.dart';
-import '../widgets/fondos.dart';
+import '../../themes/colores.dart';
+import '../../widgets/fondos.dart';
 
 class PantallaEditar extends StatefulWidget {
   final List<String> instrumentos;
