@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/eventos/pantalla_evento.dart';
+import 'package:frontend/screens/multimedia/multimedia.dart';
 // Importaciones de tus pantallas
 import 'pantalla_registro.dart';
 import 'inventario-partituras/inventario_partituras.dart';
@@ -64,7 +65,7 @@ class MenuUsuario extends StatelessWidget {
                     opcionMenu(context, 'Registrar Integrante', const PantallaRegistro()),
                     opcionMenu(context, 'Inventario- Instrumentos', const InventarioInstrumentos()),
                     opcionMenu(context, 'Inventario- Partituras', const InventarioPartituras()),
-                    opcionMenu(context, 'Multimedia', null),
+                    opcionMenu(context, 'Multimedia', const MultimediaPantalla()),
                     opcionMenu(context, 'Eventos', const PantallaEventos()),
                     opcionMenu(context, 'Perfil', null),
                   ],

@@ -54,17 +54,18 @@ class MenuUsuario extends StatelessWidget {
       ),
       trailing: const SizedBox(width: 24),
       onTap: () {
-        // 1. Guardamos el Navigator del contexto actual
-        final navigator = Navigator.of(context);
+        Navigator.pop(context); // Cierra el Drawer
 
-        // 2. Cerramos el Drawer
-        navigator.pop();
-
-        // 3. Si hay un destino, navegamos hacia la pantalla
         if (destino != null) {
-          navigator.push(
-            MaterialPageRoute(builder: (context) => destino),
-          );
+          // Ejecuta la navegación justo después de cerrar el Drawer
+          Future.microtask(() {
+            if (context.mounted) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => destino),
+              );
+            }
+          });
         }
       },
     );
