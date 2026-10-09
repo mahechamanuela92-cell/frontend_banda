@@ -39,75 +39,76 @@ class Inicio extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "BANDA SINFONICA MUNICIPAL DE GARZÓN", 
-                      style: TextStyle(fontSize: 20, color: Colores.colorLetra1, fontWeight: FontWeight.bold),
+                      "BANDA SINFONICA MUNICIPAL DE GARZÓN",
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colores.colorLetra1,
+                        fontWeight: FontWeight.bold,
+                      ),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 20),
 
-                    // Renderizado dinámico de las tarjetas con navegación completa
+                    // Tarjetas con navegación
                     ...tarjetas.map((t) => Padding(
-                      padding: const EdgeInsets.only(bottom: 16.0),
-                      child: _crearTarjeta(
-                        titulo: t['titulo'] as String,
-                        rutaImagen: t['img'] as String,
-                        imagenALaDerecha: t['der'] as bool,
-                        onTap: () {
-                          final titulo = t['titulo'] as String;
+                          padding: const EdgeInsets.only(bottom: 16.0),
+                          child: _crearTarjeta(
+                            titulo: t['titulo'] as String,
+                            rutaImagen: t['img'] as String,
+                            imagenALaDerecha: t['der'] as bool,
+                            onTap: () {
+                              final titulo = t['titulo'] as String;
 
-                          // 2. Evaluamos cuál tarjeta se presionó para redirigir a su respectiva pantalla
-                          if (titulo == 'NUESTRA HISTORIA') {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const NuestraHistoriaPantalla(),
-                              ),
-                            );
-                          } else if (titulo == 'INSTRUMENTOS CON LOS QUE CONTAMOS') {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const InstrumentosPantalla(),
-                              ),
-                            );
-                          } else if (titulo == 'CONTÁCTENOS') {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const ContactenosPantalla(),
-                              ),
-                            );
-                          }
-                        },
-                      ),
-                    )),
+                              if (titulo == 'NUESTRA HISTORIA') {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const NuestraHistoriaPantalla(),
+                                  ),
+                                );
+                              } else if (titulo == 'INSTRUMENTOS CON LOS QUE CONTAMOS') {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const InstrumentosPantalla(),
+                                  ),
+                                );
+                              } else if (titulo == 'CONTÁCTENOS') {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const ContactenosPantalla(),
+                                  ),
+                                );
+                              }
+                            },
+                          ),
+                        )),
 
                     const SizedBox(height: 4),
                   ],
                 ),
               ),
 
-              // Botones superiores (Menú y Usuario)
+              // Botón superior del menú
               Positioned(
                 top: 10,
                 left: 12,
-                child: Column(
-                  children: [
-                    _buildBotonIcono(
-                      img: 'assets/images/menu-principal.png',
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const MenuUsuario(),
-                          ),
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 12),
-                  ],
+                child: _buildBotonIcono(
+                  img: 'assets/images/menu-principal.png',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        opaque: false,                    // deja ver el inicio atrás
+                        barrierColor: Colors.transparent, // sin capa oscura
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            const MenuUsuario(),
+                      ),
+                    );
+                  },
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -116,7 +117,7 @@ class Inicio extends StatelessWidget {
   }
 }
 
-// Helper para los botones circulares superiores
+// Helper para el botón circular superior
 Widget _buildBotonIcono({required String img, required VoidCallback onTap}) {
   return GestureDetector(
     onTap: onTap,
@@ -146,7 +147,7 @@ Widget _crearTarjeta({
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.12),
+              color: Colors.black.withValues(alpha: 0.12),
               blurRadius: 6,
               offset: const Offset(0, 3),
             ),
@@ -170,6 +171,6 @@ Widget _crearTarjeta({
           ],
         ),
       ),
-    )
+    ),
   );
 }
