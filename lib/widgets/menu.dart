@@ -52,13 +52,17 @@ class MenuUsuario extends StatelessWidget {
         textAlign: TextAlign.center,
         style: const TextStyle(color: Colors.white, fontSize: 16),
       ),
-      // Equilibra el espacio del ícono para que el texto quede centrado
       trailing: const SizedBox(width: 24),
       onTap: () {
-        Navigator.pop(context);
+        // 1. Guardamos el Navigator del contexto actual
+        final navigator = Navigator.of(context);
+
+        // 2. Cerramos el Drawer
+        navigator.pop();
+
+        // 3. Si hay un destino, navegamos hacia la pantalla
         if (destino != null) {
-          Navigator.push(
-            context,
+          navigator.push(
             MaterialPageRoute(builder: (context) => destino),
           );
         }
