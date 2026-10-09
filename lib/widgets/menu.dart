@@ -3,6 +3,7 @@ import 'package:frontend/screens/eventos/pantalla_evento.dart';
 import 'package:frontend/screens/inventario-instrumentos/inventario_instrumentos.dart';
 import 'package:frontend/screens/inventario-partituras/inventario_partituras.dart';
 import 'package:frontend/screens/multimedia/multimedia.dart';
+import 'package:frontend/screens/pantalla_perfil.dart';
 import 'package:frontend/screens/pantalla_registro.dart';
 
 class MenuUsuario extends StatelessWidget {
@@ -37,7 +38,10 @@ class MenuUsuario extends StatelessWidget {
                     const MultimediaPantalla()),
                 _item(context, 'Eventos',
                     const PantallaEventos()),
+                _item(context, 'Eventos', null),
+                const PantallaEventos(),
                 _item(context, 'Perfil', null),
+                const PantallaPerfil()
               ],
             ),
           ),

@@ -31,7 +31,7 @@ class _PantallaEventosState extends State<PantallaEventos> {
     }
   }
 
-  // Muestra un mensaje con los datos del evento
+  // Muestra un mensaje con los datos del evento y vuelve a la página principal
   void guardarEvento() {
     final String mensaje =
         '${nombreController.text} - ${fechaElegida.day}/${fechaElegida.month}/${fechaElegida.year} '
@@ -39,6 +39,16 @@ class _PantallaEventosState extends State<PantallaEventos> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text(mensaje)),
     );
+
+    // Vuelve a la página principal
+    Navigator.pop(context);
+  }
+
+  @override
+  void dispose() {
+    nombreController.dispose();
+    lugarController.dispose();
+    super.dispose();
   }
 
   @override
@@ -47,117 +57,127 @@ class _PantallaEventosState extends State<PantallaEventos> {
       body: FondoBase(
         child: SafeArea(
           child: Container(
-           // Recuadro oscuro
-           margin: const EdgeInsets.all(12),
-           decoration: BoxDecoration(
-             color: Colors.black.withValues(alpha: 0.75),
-             borderRadius: BorderRadius.circular(20),
-           ),
-           child: SingleChildScrollView(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Eventos',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 10),
-
-                // Nombre del evento
-                TextField(
-                  controller: nombreController,
-                  style: const TextStyle(color: Colors.white),
-                  decoration: const InputDecoration(
-                    hintText: 'Nombre del evento',
-                    hintStyle: TextStyle(color: Colors.white),
-                    suffixIcon: Icon(Icons.edit, color: Colors.white, size: 18),
-                  ),
-                ),
-
-                // Logo
-                Center(
-                  child: Image.asset(
-                    'assets/images/fondo_login.png',
-                    height: 150,
-                  ),
-                ),
-
-                // Calendario
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: CalendarDatePicker(
-                    initialDate: fechaElegida,
-                    firstDate: DateTime(2020),
-                    lastDate: DateTime(2035),
-                    onDateChanged: (DateTime fecha) {
-                      fechaElegida = fecha;
-                    },
-                  ),
-                ),
-                const SizedBox(height: 20),
-
-                // Hora
-                Row(
-                  children: [
-                    Text(
-                      'Hora: ${horaElegida.format(context)}',
-                      style: const TextStyle(color: Colors.white, fontSize: 16),
+            // Recuadro oscuro
+            margin: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.black.withValues(alpha: 0.75),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Eventos',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
-                    IconButton(
-                      onPressed: elegirHora,
-                      icon: const Icon(Icons.edit, color: Colors.white, size: 18),
-                    ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 10),
 
-                // Lugar
-                Row(
-                  children: [
-                    const Text(
-                      'Lugar: ',
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                  // Nombre del evento
+                  TextField(
+                    controller: nombreController,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: const InputDecoration(
+                      hintText: 'Nombre del evento',
+                      hintStyle: TextStyle(color: Colors.white),
+                      suffixIcon:
+                          Icon(Icons.edit, color: Colors.white, size: 18),
                     ),
-                    Expanded(
-                      child: TextField(
-                        controller: lugarController,
-                        style: const TextStyle(color: Colors.white),
-                        decoration: const InputDecoration(
-                          suffixIcon:
-                              Icon(Icons.edit, color: Colors.white, size: 18),
+                  ),
+
+                  // Logo
+                  Center(
+                    child: Image.asset(
+                      'assets/images/fondo_login.png',
+                      height: 150,
+                    ),
+                  ),
+
+                  // Calendario
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: CalendarDatePicker(
+                      initialDate: fechaElegida,
+                      firstDate: DateTime(2020),
+                      lastDate: DateTime(2035),
+                      onDateChanged: (DateTime fecha) {
+                        fechaElegida = fecha;
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+
+                  // Hora
+                  Row(
+                    children: [
+                      Text(
+                        'Hora: ${horaElegida.format(context)}',
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                      IconButton(
+                        onPressed: elegirHora,
+                        icon: const Icon(Icons.edit,
+                            color: Colors.white, size: 18),
+                      ),
+                    ],
+                  ),
+
+                  // Lugar
+                  Row(
+                    children: [
+                      const Text(
+                        'Lugar: ',
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                      Expanded(
+                        child: TextField(
+                          controller: lugarController,
+                          style: const TextStyle(color: Colors.white),
+                          decoration: const InputDecoration(
+                            suffixIcon:
+                                Icon(Icons.edit, color: Colors.white, size: 18),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-
-                // Botón guardar
-                Center(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colores.botonClaro,
-                    ),
-                    onPressed: guardarEvento,
-                    child: const Text('Guardar'),
+                    ],
                   ),
-                ),
+                  const SizedBox(height: 20),
 
-                // Flecha para volver
-                IconButton(
-                  onPressed: () => Navigator.pop(context),
-                  icon: const Icon(Icons.arrow_back, color: Colors.pinkAccent),
-                ),
-              ],
+                  // Botón guardar
+                  Center(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colores.botonClaro,
+                      ),
+                      onPressed: guardarEvento,
+                      child: const Text('Guardar'),
+                    ),
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+                    child: Text(
+                      'BANDA SINFONICA SAN MIGUEL DE GARZÓN',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colores.colorLetra1,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-           ),
           ),
         ),
       ),

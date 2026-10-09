@@ -6,6 +6,7 @@ import 'package:frontend/screens/multimedia/multimedia.dart';
 import 'pantalla_registro.dart';
 import 'inventario-partituras/inventario_partituras.dart';
 import 'inventario-instrumentos/inventario_instrumentos.dart';
+import 'pantalla_perfil.dart';
 
 class MenuUsuario extends StatelessWidget {
   const MenuUsuario({super.key});
@@ -67,7 +68,7 @@ class MenuUsuario extends StatelessWidget {
                     opcionMenu(context, 'Inventario- Partituras', const InventarioPartituras()),
                     opcionMenu(context, 'Multimedia', const MultimediaPantalla()),
                     opcionMenu(context, 'Eventos', const PantallaEventos()),
-                    opcionMenu(context, 'Perfil', null),
+                    opcionMenu(context, 'Perfil', const PantallaPerfil()),
                   ],
                 ),
               ),

@@ -18,4 +18,5 @@ class Colores {
   static const Color bolitaOscura = Color(0x40146973);
   static const Color notaMusical = Color(0x55A5E0DC);
   static const Color colorLetra1 = Color(0xFFE2BC65);
+  static const Color bloqueOscuro = Color(0xBF000000);
 }
