@@ -152,8 +152,12 @@ class _PantallaPerfilState extends State<PantallaPerfil> {
                                  Navigator.pop(context);
                               }),
                               const SizedBox(height: 16),
-                              _boton('Cerrar Sesion', () {
-                                Navigator.of(context).popUntil((ruta) => ruta.isFirst);
+                              _opcionMenu(context, 'Cerrar Sesión', () {
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const InicioSesion()),
+                                  (route) => false, // Elimina todas las pantallas anteriores de la pila
+                                );
                               }),
                             ],
                           ),
