@@ -1,16 +1,42 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:frontend/widgets/fondos.dart';
 
-class FotosPantalla extends StatelessWidget {
+class FotosPantalla extends StatefulWidget {
   const FotosPantalla({super.key});
 
-  // Lista dinámicamente extensible de imágenes
-  final List<String> fotos = const [
+  @override
+  State<FotosPantalla> createState() => _FotosPantallaState();
+}
 
+class _FotosPantallaState extends State<FotosPantalla> {
+  final ImagePicker _picker = ImagePicker();
+  
+  // Lista de fotos (puedes mezclar URLs de ejemplo y fotos seleccionadas locales)
+  final List<String> fotos = [
+    'https://picsum.photos/600/600?random=1',
+    'https://picsum.photos/600/600?random=2',
+    'https://picsum.photos/600/600?random=3',
+    'https://picsum.photos/600/600?random=4',
   ];
 
+  // Función para abrir la galería del celular y seleccionar imágenes
+  Future<void> _seleccionarImagen() async {
+    final List<XFile> imagenesSeleccionadas = await _picker.pickMultiImage();
+    if (imagenesSeleccionadas.isNotEmpty) {
+      setState(() {
+        for (var img in imagenesSeleccionadas) {
+          fotos.add(img.path); // Agrega la ruta local a la lista
+        }
+      });
+    }
+  }
+
   // Función para abrir imagen en grande (Modal)
-  void _mostrarFotoGrande(BuildContext context, String url) {
+  void _mostrarFotoGrande(BuildContext context, String urlOPath) {
+    bool esLocal = !urlOPath.startsWith('http');
+
     showDialog(
       context: context,
       builder: (context) => Dialog(
@@ -21,7 +47,9 @@ class FotosPantalla extends StatelessWidget {
           children: [
             InteractiveViewer(
               child: Center(
-                child: Image.network(url, fit: BoxFit.contain),
+                child: esLocal
+                    ? Image.file(File(urlOPath), fit: BoxFit.contain)
+                    : Image.network(urlOPath, fit: BoxFit.contain),
               ),
             ),
             Positioned(
@@ -74,6 +102,7 @@ class FotosPantalla extends StatelessWidget {
                   ),
                   const SizedBox(height: 15),
 
+                  // Cuadrícula de fotos con scrollbar
                   Expanded(
                     child: RawScrollbar(
                       controller: scrollController,
@@ -85,24 +114,70 @@ class FotosPantalla extends StatelessWidget {
                         controller: scrollController,
                         padding: const EdgeInsets.only(right: 12),
                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2, // De a 2 por fila
+                          crossAxisCount: 2, // Organizadas de a 2
                           crossAxisSpacing: 10,
                           mainAxisSpacing: 10,
                           childAspectRatio: 1.0,
                         ),
                         itemCount: fotos.length,
                         itemBuilder: (context, index) {
+                          bool esLocal = !fotos[index].startsWith('http');
                           return GestureDetector(
                             onTap: () => _mostrarFotoGrande(context, fotos[index]),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(12),
-                              child: Image.network(
-                                fotos[index],
-                                fit: BoxFit.cover,
-                              ),
+                              child: esLocal
+                                  ? Image.file(File(fotos[index]), fit: BoxFit.cover)
+                                  : Image.network(fotos[index], fit: BoxFit.cover),
                             ),
                           );
                         },
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 15),
+
+// Botón Seleccionar Imagen
+                  SizedBox(
+                    width: double.infinity,
+                    height: 48,
+                    child: ElevatedButton(
+                      onPressed: _seleccionarImagen,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFA1E3D8),
+                        foregroundColor: Colors.black87,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                      ),
+                      child: const Text( // <--- Asegúrate de incluir 'child:' aquí
+                        "Seleccionar Imagen",
+                        style: TextStyle(fontSize: 16, fontFamily: 'Serif', fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  // Botón Guardar (Devuelve a Multimedia)
+                  SizedBox(
+                    width: double.infinity,
+                    height: 48,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFA1E3D8),
+                        foregroundColor: Colors.black87,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                      ),
+                      child: const Text( // <--- Y aquí también
+                        "Guardar",
+                        style: TextStyle(fontSize: 16, fontFamily: 'Serif', fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),

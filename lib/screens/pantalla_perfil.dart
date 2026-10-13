@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:frontend/themes/colores.dart';
+import 'package:frontend/screens/inicioSesion.dart'; // <--- 1. Importación necesaria
 import '../widgets/fondos.dart';
 
 class PantallaPerfil extends StatefulWidget {
@@ -63,6 +64,23 @@ class _PantallaPerfilState extends State<PantallaPerfil> {
     );
   }
 
+  // <--- 2. Método _opcionMenu agregado para que funcione el botón de Cerrar Sesión --->
+  Widget _opcionMenu(BuildContext context, String texto, VoidCallback onTap) {
+    return SizedBox(
+      width: double.infinity,
+      height: 60,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colores.botonClaro,
+          foregroundColor: Colors.black.withValues(alpha: 0.75),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        ),
+        onPressed: onTap,
+        child: Text(texto, style: const TextStyle(fontSize: 20)),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,10 +108,10 @@ class _PantallaPerfilState extends State<PantallaPerfil> {
                       child: SingleChildScrollView(
                         child: Container(
                           width: double.infinity,
-                            margin: const EdgeInsets.all(12),
+                          margin: const EdgeInsets.all(12),
                           padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 40),
                           decoration: BoxDecoration(
-                            color: Colors.black.withValues(alpha: 0.75), // mismo color de Eventos
+                            color: Colors.black.withValues(alpha: 0.75),
                             borderRadius: BorderRadius.circular(28),
                           ),
                           child: Column(
@@ -129,7 +147,7 @@ class _PantallaPerfilState extends State<PantallaPerfil> {
                                       right: 0,
                                       top: 0,
                                       child: GestureDetector(
-                                        onTap: _elegirFoto, // abre la galería
+                                        onTap: _elegirFoto,
                                         child: const Icon(Icons.edit, color: Colors.white),
                                       ),
                                     ),
@@ -149,14 +167,15 @@ class _PantallaPerfilState extends State<PantallaPerfil> {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(content: Text('Perfil guardado')),
                                 );
-                                 Navigator.pop(context);
+                                Navigator.pop(context);
                               }),
                               const SizedBox(height: 16),
+                              
                               _opcionMenu(context, 'Cerrar Sesión', () {
                                 Navigator.pushAndRemoveUntil(
                                   context,
                                   MaterialPageRoute(builder: (context) => const InicioSesion()),
-                                  (route) => false, // Elimina todas las pantallas anteriores de la pila
+                                  (route) => false,
                                 );
                               }),
                             ],
