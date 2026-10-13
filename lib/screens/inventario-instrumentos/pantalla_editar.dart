@@ -27,125 +27,113 @@ class _PantallaEditarState extends State<PantallaEditar> {
     _nombre.clear();
   }
 
+  Future<T?> _dialogo<T>(String t, Widget c, String s, T Function() v) => showDialog<T>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text(t), content: c,
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancelar')),
+            TextButton(onPressed: () => Navigator.pop(ctx, v()), child: Text(s)),
+          ],
+        ),
+      );
+
   Future<void> _editar(int i) async {
     final c = TextEditingController(text: _lista[i]);
-    final nuevo = await showDialog<String>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Editar instrumento'),
-        content: TextField(controller: c, autofocus: true),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: const Text('Cancelar'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, c.text.trim()),
-            child: const Text('Aceptar'),
-          ),
-        ],
-      ),
-    );
+    final n = await _dialogo<String>('Editar instrumento', TextField(controller: c, autofocus: true), 'Aceptar', () => c.text.trim());
     c.dispose();
-    if (nuevo != null && nuevo.isNotEmpty) setState(() => _lista[i] = nuevo);
+    if (n != null && n.isNotEmpty) setState(() => _lista[i] = n);
   }
 
   Future<void> _eliminar(int i) async {
-    final ok = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Eliminar'),
-        content: Text('¿Eliminar "${_lista[i]}" de la lista?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancelar'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Eliminar'),
-          ),
-        ],
-      ),
-    );
-    if (ok == true) setState(() => _lista.removeAt(i));
+    if (await _dialogo<bool>('Eliminar', Text('¿Eliminar "${_lista[i]}" de la lista?'), 'Eliminar', () => true) == true) {
+      setState(() => _lista.removeAt(i));
+    }
   }
+
+  Widget _texto(String t, double sz, {bool b = false, Color col = Colors.white}) =>
+      Text(t, textAlign: TextAlign.center, style: TextStyle(color: col, fontSize: sz, fontWeight: b ? FontWeight.bold : FontWeight.normal));
+
+  Widget _esp(double h) => SizedBox(height: h);
 
   @override
   Widget build(BuildContext context) {
-    const blanco18 = TextStyle(color: Colors.white, fontSize: 18);
-
     return Scaffold(
       body: FondoBase(
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(12),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Editar Lista',
-                    style: TextStyle(color: Colors.white, fontSize: 24)),
-                const SizedBox(height: 20),
-                const Text('Agregar Instrumento a la Lista', style: blanco18),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        color: Colores.botonClaro,
-                        child: TextField(
-                          controller: _nombre,
-                          onSubmitted: (_) => _agregar(),
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: 10),
+                Expanded(
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(color: Colores.bloqueOscuro, borderRadius: BorderRadius.circular(24)),
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          top: 38, left: 20, right: 20,
+                          child: Image.asset('assets/images/fondo_login.png', height: 150, color: Colores.bloqueOscuro, colorBlendMode: BlendMode.srcATop),
+                        ),
+                        Positioned.fill(
+                          child: Column(
+                            children: [
+                              _texto('Editar Lista', 24, b: true),
+                              _esp(170),
+                              _texto('Agregar Instrumento a la Lista', 18),
+                              _esp(10),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      decoration: BoxDecoration(color: Colores.botonClaro, borderRadius: BorderRadius.circular(12)),
+                                      child: TextField(
+                                        controller: _nombre,
+                                        onSubmitted: (_) => _agregar(),
+                                        decoration: const InputDecoration(border: InputBorder.none, contentPadding: EdgeInsets.symmetric(horizontal: 12)),
+                                      ),
+                                    ),
+                                  ),
+                                  IconButton(onPressed: _agregar, icon: const Icon(Icons.add_circle, color: Colors.white)),
+                                ],
+                              ),
+                              _esp(16),
+                              Expanded(
+                                child: ListView.builder(
+                                  itemCount: _lista.length,
+                                  itemBuilder: (context, i) => Card(
+                                    color: Colores.botonClaro,
+                                    child: ListTile(
+                                      title: Text(_lista[i]),
+                                      trailing: Row(mainAxisSize: MainAxisSize.min, children: [
+                                        IconButton(icon: const Icon(Icons.edit), onPressed: () => _editar(i)),
+                                        IconButton(icon: const Icon(Icons.delete, color: Colors.red), onPressed: () => _eliminar(i)),
+                                      ]),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              _esp(12),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colores.botonClaro, foregroundColor: Colors.black,
+                                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 10),
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                ),
+                                onPressed: () => Navigator.pop(context, _lista),
+                                child: const Text('Guardar'),
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: _agregar,
-                      icon: const Icon(Icons.add_circle, color: Colors.white),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: _lista.length,
-                    itemBuilder: (context, i) => Card(
-                      color: Colores.botonClaro,
-                      child: ListTile(
-                        title: Text(_lista[i]),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            IconButton(
-                              icon: const Icon(Icons.edit),
-                              onPressed: () => _editar(i),
-                            ),
-                            IconButton(
-                              icon: const Icon(Icons.delete, color: Colors.red),
-                              onPressed: () => _eliminar(i),
-                            ),
-                          ],
-                        ),
-                      ),
+                      ],
                     ),
                   ),
                 ),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colores.botonClaro,
-                      foregroundColor: Colors.black,
-                    ),
-                    onPressed: () => Navigator.pop(context, _lista),
-                    child: const Text('Guardar'),
-                  ),
-                ),
+                _esp(24),
+                _texto('BANDA SINFONICA SAN MIGUEL DE GARZÓN', 20, b: true, col: Colores.colorLetra1),
+                _esp(16),
               ],
             ),
           ),
