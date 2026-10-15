@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:frontend/screens/inicio1.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/inicioSesion.dart';
 import 'package:frontend/widgets/fondos.dart';
 
 class Splashscreen extends StatefulWidget {
@@ -18,7 +19,7 @@ class _SplashscreenState extends State<Splashscreen> {
       if (mounted) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const Inicio1()),
+          MaterialPageRoute(builder: (context) => const InicioSesion()),
         );
       }
     });
@@ -28,11 +29,35 @@ class _SplashscreenState extends State<Splashscreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FondoBase(
-        child: Center(
-          child: Image.asset(
-            "assets/images/fondo_login1.png",
-            height: 230, 
-            fit: BoxFit.contain,
+        child: SafeArea(
+          child: Center(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Logo
+                  Image.asset(
+                    "assets/images/fondo_login1.png",
+                    height: 230, 
+                    fit: BoxFit.contain,
+                  ),
+                  const SizedBox(height: 30),
+                  
+                  // Texto de la Banda
+                  const Text(
+                    'BANDA SINFONICA SAN MIGUEL DE GARZÓN',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFFE2BC65), // Dorado/Amarillo
+                      height: 1.3,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       ),

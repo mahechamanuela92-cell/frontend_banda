@@ -64,7 +64,7 @@ class _PantallaEventosState extends State<PantallaEventos> {
                   margin: const EdgeInsets.all(12),
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: Colors.black.withValues(alpha: 0.75),
+                    color: Colores.bloqueOscuro,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Column(

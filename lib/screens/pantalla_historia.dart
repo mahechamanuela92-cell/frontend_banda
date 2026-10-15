@@ -33,7 +33,7 @@ class PantallaHistoria extends StatelessWidget {
                   margin: EdgeInsets.symmetric(horizontal: 20),
                   padding: EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: Colores.cajaOscura,
+                    color: Colores.bloqueOscuro,
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: SingleChildScrollView(
@@ -52,8 +52,7 @@ class PantallaHistoria extends StatelessWidget {
                         Text(
                           'La Banda Sinfónica Municipal de Garzón es el pilar cultural de la "Capital Diocesana" del Huila. Con una trayectoria que nace de la tradición de las retretas del siglo XX, se ha consolidado como una institución esencial para la formación artística de la juventud garzonena, fusionando la disciplina técnica con el sentimiento regional.\n\n'
                           'Es reconocida por su maestría en ritmos tradicionales como el bambuco y el pasillo, además de un amplio repertorio internacional y clásico. Funciona como una escuela de vida, permitiendo que niños y jóvenes se profesionalicen en música de viento y percusión.\n\n'
-                          'Participaciones constantes en el Concurso Nacional de Bandas de Paipa. Fue galardonada como una de las 10 mejores bandas del Huila, reafirmando su excelencia musical en el departamento. Bajo la dirección de maestros locales, continúa siendo el alma de las festividades en la Catedral de San Miguel y el parque principal, manteniendo vigente el patrimonio musical del municipio.\n\n'
-                          'En Garzón, la música de banda es tan importante que se considera un patrimonio vivo. Si alguna vez tienes la oportunidad de verlos en un desfile o en una retreta, notarás que la conexión con el público es inmediata, pues interpretan la identidad misma del pueblo "Garzoneño".',
+                          'Participaciones constantes en el Concurso Nacional de Bandas de Paipa. Fue galardonada como una de las 10 mejores bandas del Huila, reafirmando su excelencia musical en el departamento. Bajo la dirección de maestros locales, continúa siendo el alma de las festividades en la Catedral de San Miguel y el parque principal, manteniendo vigente el patrimonio musical del municipio.\n\n',
                           textAlign: TextAlign.justify,
                           style: TextStyle(fontSize: 14, color: Colors.white),
                         ),

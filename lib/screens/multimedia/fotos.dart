@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:frontend/themes/colores.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:frontend/widgets/fondos.dart';
 
@@ -78,7 +79,7 @@ class _FotosPantallaState extends State<FotosPantalla> {
             child: Container(
               padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
-                color: const Color(0xFF0D1E1C).withOpacity(0.92),
+                color: Colores.bloqueOscuro,
                 borderRadius: BorderRadius.circular(24.0),
               ),
               child: Column(

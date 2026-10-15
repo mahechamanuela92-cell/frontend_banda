@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/eventos/pantalla_evento.dart';
 import 'package:frontend/screens/multimedia/multimedia.dart';
+import 'package:frontend/themes/colores.dart';
 // Importaciones de tus pantallas
 import 'pantalla_registro.dart';
 import 'inventario-partituras/inventario_partituras.dart';
@@ -38,7 +39,7 @@ class MenuUsuario extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent, // se ve el inicio atrás
+      backgroundColor: Colores.bloqueOscuro, // se ve el inicio atrás
       body: Stack(
         children: [
           // CAPA 1: cubre toda la pantalla, al tocarla se cierra el menú
@@ -57,13 +58,12 @@ class MenuUsuario extends StatelessWidget {
                 margin: const EdgeInsets.all(10),
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF2B2B2B).withValues(alpha: 0.92),
+                  color: Colores.bloqueOscuro,
                   borderRadius: BorderRadius.circular(24),
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    opcionMenu(context, 'Registrar Integrante', const PantallaRegistro()),
                     opcionMenu(context, 'Inventario- Instrumentos', const InventarioInstrumentos()),
                     opcionMenu(context, 'Inventario- Partituras', const InventarioPartituras()),
                     opcionMenu(context, 'Multimedia', const MultimediaPantalla()),

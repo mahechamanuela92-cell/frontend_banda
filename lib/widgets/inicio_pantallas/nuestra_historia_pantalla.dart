@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/themes/colores.dart';
 import '../fondos.dart';
 
 class NuestraHistoriaPantalla extends StatefulWidget {
@@ -36,7 +37,7 @@ final List<String> imagenesAssets = const [
             child: Container(
               padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
-                color: const Color(0xFF0D1E1C).withOpacity(0.92),
+                color: Colores.bloqueOscuro,
                 borderRadius: BorderRadius.circular(20.0),
               ),
               child: Column(
@@ -50,15 +51,44 @@ final List<String> imagenesAssets = const [
                   const SizedBox(height: 10),
 
                   // Título
-                  const Text(
-                    "NUESTRA HISTORIA",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Serif',
+                Container(
+                  width: double.infinity,
+                  height: 55,
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [
+                        Color(0xFFB3F0EC),
+                        Color(0xFF8AE1DC),
+                      ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
                     ),
+                    borderRadius: BorderRadius.circular(30.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.3),
+                        blurRadius: 10,
+                        offset: const Offset(0, 5),
+                      ),
+                    ],
                   ),
+                  alignment: Alignment.center,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      SizedBox(width: 10),
+                      Text(
+                        'NUESTRA HISTORIA',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w800,
+                          color: Color(0xFF0F4C5C),
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                   const SizedBox(height: 15),
 
                   // Carrusel de 6 fotos redondeadas
@@ -102,8 +132,7 @@ final List<String> imagenesAssets = const [
                         "La Banda Sinfónica Municipal de Garzón es el pilar cultural de la \"Capital Diocesana\" del Huila. Con una trayectoria que nace de la tradición de las retretas del siglo XX, se ha consolidado como una institución esencial para la formación artística de la juventud garzoneña, fusionando la disciplina técnica con el sentimiento regional.\n\n"
                         "Es reconocida por su maestría en ritmos tradicionales como el bambuco y el pasillo, además de un amplio repertorio internacional y clásico.\n"
                         "Funciona como una escuela de vida, permitiendo que niños y jóvenes se profesionalicen en la música de viento y percusión.\n\n"
-                        "Participaciones constantes en el Concurso Nacional de Bandas de Paipa. Fue galardonada como una de las 10 mejores bandas del Huila, reafirmando su excelencia musical en el departamento. Bajo la dirección de maestros locales, continúa siendo el alma de las festividades en la Catedral de San Miguel y el parque principal, manteniendo vigente el patrimonio musical del municipio.\n\n"
-                        "En Garzón, la música de banda es tan importante que se considera un patrimonio vivo. Si alguna vez tienes la oportunidad de verlos en un desfile o en una retreta, notarás que la conexión con el público es inmediata, pues interpretan la identidad misma del pueblo \"Garzoneño\".",
+                        "Participaciones constantes en el Concurso Nacional de Bandas de Paipa. Fue galardonada como una de las 10 mejores bandas del Huila, reafirmando su excelencia musical en el departamento. Bajo la dirección de maestros locales, continúa siendo el alma de las festividades en la Catedral de San Miguel y el parque principal, manteniendo vigente el patrimonio musical del municipio.\n\n",
                         style: TextStyle(
                           color: Colors.white70,
                           fontSize: 14.5,

@@ -70,7 +70,7 @@ class _InventarioPartiturasState extends State<InventarioPartituras> {
                         margin: const EdgeInsets.all(12),
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: Colors.black.withValues(alpha: 0.75),
+                        color: Colores.bloqueOscuro,
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: SingleChildScrollView(
@@ -158,7 +158,7 @@ class _InventarioPartiturasState extends State<InventarioPartituras> {
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colores.botonClaro,
-                                foregroundColor: Colors.black,
+                                foregroundColor: Colores.bloqueOscuro,
                                 padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20),

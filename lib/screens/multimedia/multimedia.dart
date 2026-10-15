@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/multimedia/fotos.dart';
 import 'package:frontend/screens/multimedia/videos.dart';
+import 'package:frontend/themes/colores.dart';
 import 'package:frontend/widgets/fondos.dart';
 
 class MultimediaPantalla extends StatelessWidget {
@@ -16,7 +17,7 @@ class MultimediaPantalla extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(20.0),
               decoration: BoxDecoration(
-                color: const Color(0xFF0D1E1C).withOpacity(0.92),
+                color: Colores.bloqueOscuro,
                 borderRadius: BorderRadius.circular(24.0),
               ),
               child: Column(

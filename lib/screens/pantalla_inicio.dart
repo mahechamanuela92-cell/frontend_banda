@@ -77,7 +77,7 @@ class Inicio extends StatelessWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const ContactenosPantalla(),
+                                    builder: (context) => const PantallaContacto(),
                                   ),
                                 );
                               }
@@ -94,14 +94,13 @@ class Inicio extends StatelessWidget {
               Positioned(
                 top: 10,
                 left: 12,
-                child: _buildBotonIcono(
-                  img: 'assets/images/menu-principal.png',
+                child: _buildBotonMenuIcono(
                   onTap: () {
                     Navigator.push(
                       context,
                       PageRouteBuilder(
-                        opaque: false,                    // deja ver el inicio atrás
-                        barrierColor: Colors.transparent, // sin capa oscura
+                        opaque: false,            
+                        barrierColor: Colors.transparent, 
                         pageBuilder: (context, animation, secondaryAnimation) =>
                             const MenuUsuario(),
                       ),
@@ -117,58 +116,103 @@ class Inicio extends StatelessWidget {
   }
 }
 
-// Helper para el botón circular superior
-Widget _buildBotonIcono({required String img, required VoidCallback onTap}) {
-  return GestureDetector(
-    onTap: onTap,
-    child: Image.asset(img, width: 42, height: 42, fit: BoxFit.contain),
+// Método para el botón del menú superior con diseño de estilo degradado turquesa
+Widget _buildBotonMenuIcono({required VoidCallback onTap}) {
+  return Container(
+    height: 48,
+    width: 48,
+    decoration: BoxDecoration(
+      gradient: const LinearGradient(
+        colors: [
+          Color(0xFFB3F0EC),
+          Color(0xFF8AE1DC),
+        ],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+      ),
+      borderRadius: BorderRadius.circular(24.0),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.25),
+          blurRadius: 6,
+          offset: const Offset(0, 3),
+        ),
+      ],
+    ),
+    child: Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(24.0),
+        child: const Icon(
+          Icons.menu,
+          color: Color(0xFF0F4C5C),
+          size: 26,
+        ),
+      ),
+    ),
   );
 }
 
+// Método auxiliar que faltaba para crear las tarjetas principales
 Widget _crearTarjeta({
   required String titulo,
   required String rutaImagen,
   required bool imagenALaDerecha,
   required VoidCallback onTap,
 }) {
-  final imgWidget = Image.asset(rutaImagen, height: 65, width: 65, fit: BoxFit.contain);
+  final imgWidget = Image.asset(rutaImagen, height: 48, width: 48, fit: BoxFit.contain);
 
-  return Material(
-    color: Colors.transparent,
-    child: InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        width: double.infinity,
-        height: 90,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        decoration: BoxDecoration(
-          color: const Color(0xFF98DDD6),
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.12),
-              blurRadius: 6,
-              offset: const Offset(0, 3),
-            ),
-          ],
+  return Container(
+    width: double.infinity,
+    height: 90,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(30.0),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.2),
+          blurRadius: 8,
+          offset: const Offset(0, 4),
         ),
-        child: Row(
-          children: [
-            if (!imagenALaDerecha) ...[imgWidget, const SizedBox(width: 12)],
-            Expanded(
-              child: Text(
-                titulo,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                ),
-              ),
+      ],
+    ),
+    child: Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(30.0),
+        child: Ink(
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              colors: [
+                Color(0xFFB3F0EC),
+                Color(0xFF8AE1DC),
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
             ),
-            if (imagenALaDerecha) ...[const SizedBox(width: 12), imgWidget],
-          ],
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
+              children: [
+                if (!imagenALaDerecha) ...[imgWidget, const SizedBox(width: 14)],
+                Expanded(
+                  child: Text(
+                    titulo,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w800,
+                      color: Color(0xFF0F4C5C),
+                    ),
+                  ),
+                ),
+                if (imagenALaDerecha) ...[const SizedBox(width: 12), imgWidget],
+              ],
+            ),
+          ),
         ),
       ),
     ),

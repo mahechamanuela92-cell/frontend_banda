@@ -5,6 +5,7 @@ import 'package:frontend/screens/inventario-partituras/inventario_partituras.dar
 import 'package:frontend/screens/multimedia/multimedia.dart';
 import 'package:frontend/screens/pantalla_perfil.dart';
 import 'package:frontend/screens/pantalla_registro.dart';
+import 'package:frontend/themes/colores.dart';
 
 class MenuUsuario extends StatelessWidget {
   const MenuUsuario({super.key});
@@ -12,7 +13,7 @@ class MenuUsuario extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colores.bloqueOscuro,
       elevation: 0,
       width: 300,
       child: SafeArea(
@@ -22,14 +23,12 @@ class MenuUsuario extends StatelessWidget {
             margin: const EdgeInsets.only(top: 8, left: 8),
             padding: const EdgeInsets.symmetric(vertical: 16),
             decoration: BoxDecoration(
-              color: Colors.black.withValues(alpha: 0.85),
+              color: Colores.bloqueOscuro,
               borderRadius: BorderRadius.circular(24),
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min, 
               children: [
-                _item(context, 'Registrar Integrante',
-                    const PantallaRegistro()),
                 _item(context, 'Inventario- Instrumentos',
                     const InventarioInstrumentos()),
                 _item(context, 'Inventario- Partituras',

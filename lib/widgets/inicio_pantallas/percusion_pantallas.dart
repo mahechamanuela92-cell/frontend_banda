@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/themes/colores.dart';
 import 'package:frontend/widgets/fondos.dart';
 
 
@@ -25,7 +26,7 @@ class PercusionPantalla extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
-                color: const Color(0xFF0D1E1C).withOpacity(0.92),
+                color: Colores.bloqueOscuro,
                 borderRadius: BorderRadius.circular(20.0),
               ),
               child: Column(

@@ -55,7 +55,7 @@ class _PantallaPerfilState extends State<PantallaPerfil> {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: Colores.botonClaro,
-          foregroundColor: Colors.black.withValues(alpha: 0.75),
+          foregroundColor: Colores.bloqueOscuro,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         ),
         onPressed: onTap,
@@ -72,7 +72,7 @@ class _PantallaPerfilState extends State<PantallaPerfil> {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: Colores.botonClaro,
-          foregroundColor: Colors.black.withValues(alpha: 0.75),
+          foregroundColor: Colores.bloqueOscuro,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         ),
         onPressed: onTap,
@@ -111,7 +111,7 @@ class _PantallaPerfilState extends State<PantallaPerfil> {
                           margin: const EdgeInsets.all(12),
                           padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 40),
                           decoration: BoxDecoration(
-                            color: Colors.black.withValues(alpha: 0.75),
+                            color: Colores.bloqueOscuro,
                             borderRadius: BorderRadius.circular(28),
                           ),
                           child: Column(

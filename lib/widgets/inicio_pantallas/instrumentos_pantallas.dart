@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/themes/colores.dart';
 import 'package:frontend/widgets/inicio_pantallas/cuerdas_pantallas.dart';
 import 'package:frontend/widgets/inicio_pantallas/percusion_pantallas.dart';
 import 'package:frontend/widgets/inicio_pantallas/viento_maderda_pantalla.dart';
@@ -18,7 +19,7 @@ class InstrumentosPantalla extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(20.0),
               decoration: BoxDecoration(
-                color: const Color(0xFF0D1E1C).withOpacity(0.9),
+                color: Colores.bloqueOscuro,
                 borderRadius: BorderRadius.circular(16.0),
               ),
               child: Column(
@@ -30,14 +31,44 @@ class InstrumentosPantalla extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
 
-                  const Text(
-                    "Instrumentos con los que contamos",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
+                Container(
+                  width: double.infinity,
+                  height: 55,
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [
+                        Color(0xFFB3F0EC),
+                        Color(0xFF8AE1DC),
+                      ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
                     ),
+                    borderRadius: BorderRadius.circular(30.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.3),
+                        blurRadius: 10,
+                        offset: const Offset(0, 5),
+                      ),
+                    ],
                   ),
+                  alignment: Alignment.center,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      SizedBox(width: 10),
+                      Text(
+                        'NUESTRO INSTRUMENTOS',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w800,
+                          color: Color(0xFF0F4C5C),
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                   const SizedBox(height: 20),
 
                   Expanded(
