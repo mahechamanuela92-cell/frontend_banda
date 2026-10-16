@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:frontend/screens/inicio1.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/inicioSesion.dart';
 import 'package:frontend/widgets/fondos.dart';

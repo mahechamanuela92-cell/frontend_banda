@@ -4,7 +4,6 @@ import 'package:frontend/screens/inventario-instrumentos/inventario_instrumentos
 import 'package:frontend/screens/inventario-partituras/inventario_partituras.dart';
 import 'package:frontend/screens/multimedia/multimedia.dart';
 import 'package:frontend/screens/pantalla_perfil.dart';
-import 'package:frontend/screens/pantalla_registro.dart';
 import 'package:frontend/themes/colores.dart';
 
 class MenuUsuario extends StatelessWidget {
