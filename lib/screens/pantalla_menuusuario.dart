@@ -3,7 +3,7 @@ import 'package:frontend/screens/eventos/pantalla_evento.dart';
 import 'package:frontend/screens/multimedia/multimedia.dart';
 import 'package:frontend/themes/colores.dart';
 // Importaciones de tus pantallas
-import 'pantalla_registro.dart';
+
 import 'inventario-partituras/inventario_partituras.dart';
 import 'inventario-instrumentos/inventario_instrumentos.dart';
 import 'pantalla_perfil.dart';
