@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/eventos/pantalla_evento.dart';
 import 'package:frontend/screens/multimedia/multimedia.dart';
@@ -39,7 +38,7 @@ class MenuUsuario extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colores.bloqueOscuro, // se ve el inicio atrás
+      backgroundColor: Colors.transparent, // <- CAMBIADO A TRANSPARENTE
       body: Stack(
         children: [
           // CAPA 1: cubre toda la pantalla, al tocarla se cierra el menú
@@ -58,7 +57,7 @@ class MenuUsuario extends StatelessWidget {
                 margin: const EdgeInsets.all(10),
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 decoration: BoxDecoration(
-                  color: Colores.bloqueOscuro,
+                  color: Colores.bloqueOscuro, // El cuadro mantiene su color verde
                   borderRadius: BorderRadius.circular(24),
                 ),
                 child: Column(
