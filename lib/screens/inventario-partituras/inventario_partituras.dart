@@ -13,39 +13,54 @@ class InventarioPartituras extends StatefulWidget {
 class _InventarioPartiturasState extends State<InventarioPartituras> {
   List<String> partituras = ['Himno de Colombia', 'Himno del Huila', 'Marcha Triunfal'];
   List<String> tipos = ['PDF', 'Imagen', 'Word'];
+  
+  // Listas para instrumentos y voces
+  final List<String> instrumentos = [
+    'Flauta Traversa', 'Flauta Picolo', 'Clarinete', 'Saxófono',
+    'Oboe', 'Fagot', 'Trompeta', 'Fliscorno', 'Trombón',
+    'Bombardino', 'Tuba', 'Corneta', 'Violín', 'Viola',
+    'Violonchelo', 'Contrabajo', 'Bombo', 'Redoblante',
+    'Platillos', 'Batería', 'Glockenspiel', 'Timbales Sinfónicos',
+    'Congas', 'Timbal'
+  ];
+
+  final List<String> voces = ['Voz 1', 'Voz 2', 'Voz 3', 'Voz 4', 'Voz 5', 'Voz 6', 'Voz 7'];
+
   bool mostrarLista = false;
   String? tipoElegido;
   String? nombreArchivo;
+  String? instrumentoElegido;
+  String? vozElegida;
 
-      // Abre los documentos del celular según el tipo
-      void elegirArchivo(String tipo) async {
-        List<String> extensiones = ['pdf'];
-        if (tipo == 'Imagen') extensiones = ['jpg', 'jpeg', 'png'];
-        if (tipo == 'Word') extensiones = ['doc', 'docx'];
+  // Abre los documentos del celular según el tipo
+  void elegirArchivo(String tipo) async {
+    List<String> extensiones = ['pdf'];
+    if (tipo == 'Imagen') extensiones = ['jpg', 'jpeg', 'png'];
+    if (tipo == 'Word') extensiones = ['doc', 'docx'];
 
-        FilePickerResult? resultado = await FilePicker.platform.pickFiles(
-          type: FileType.custom,
-          allowedExtensions: extensiones,
-        );
-        if (resultado != null) {
-          setState(() => nombreArchivo = resultado.files.single.name);
-        }
-      }
+    FilePickerResult? resultado = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: extensiones,
+    );
+    if (resultado != null) {
+      setState(() => nombreArchivo = resultado.files.single.name);
+    }
+  }
 
-      // Agrega el archivo y vuelve a la pantalla de inicio
-      void guardar() {
-        if (nombreArchivo == null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Primero elige un archivo')),
-          );
-          return;
-        }
-        partituras.add(nombreArchivo!);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Partitura guardada')),
-        );
-        Navigator.pop(context);
-      }
+  // Agrega el archivo y vuelve a la pantalla de inicio
+  void guardar() {
+    if (nombreArchivo == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Primero elige un archivo')),
+      );
+      return;
+    }
+    partituras.add(nombreArchivo!);
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Partitura guardada')),
+    );
+    Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +82,7 @@ class _InventarioPartiturasState extends State<InventarioPartituras> {
                     ),
                     // Bloque contenedor oscuro semitransparente extendido hacia abajo
                     Container(
-                        margin: const EdgeInsets.all(12),
+                      margin: const EdgeInsets.all(12),
                       width: double.infinity,
                       decoration: BoxDecoration(
                         color: Colores.bloqueOscuro,
@@ -83,11 +98,10 @@ class _InventarioPartiturasState extends State<InventarioPartituras> {
                               style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
                             ),
                           
-                            
                             // Espacio donde queda el ave expuesta
                             const SizedBox(height: 200),
 
-                             TextButton(
+                            TextButton(
                               onPressed: () => setState(() => mostrarLista = !mostrarLista),
                               child: const Text(
                                 'Lista ▾',
@@ -95,7 +109,7 @@ class _InventarioPartiturasState extends State<InventarioPartituras> {
                               ),
                             ),
 
-                            // Recuadro claro de la Lista (ubicado justo donde indicas la línea verde)
+                            // Recuadro claro de la Lista
                             Container(
                               width: double.infinity,
                               height: 180,
@@ -154,7 +168,69 @@ class _InventarioPartiturasState extends State<InventarioPartituras> {
                                   style: const TextStyle(color: Colors.white),
                                 ),
                               ),
-                            const SizedBox(height: 76),
+
+                            const SizedBox(height: 24),
+
+                            // --- NUEVO: SECCIÓN ELEGIR INSTRUMENTO ---
+                            const Text(
+                              'Elegir Instrumento',
+                              style: TextStyle(color: Colors.white, fontSize: 18),
+                            ),
+                            const SizedBox(height: 16),
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 12),
+                              decoration: BoxDecoration(
+                                color: Colores.botonClaro,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: DropdownButton<String>(
+                                value: instrumentoElegido,
+                                hint: const Text('Seleccionar instrumento', style: TextStyle(color: Colors.black54)),
+                                isExpanded: true,
+                                underline: const SizedBox(),
+                                dropdownColor: Colores.botonClaro,
+                                items: [
+                                  for (String instrumento in instrumentos)
+                                    DropdownMenuItem(value: instrumento, child: Text(instrumento)),
+                                ],
+                                onChanged: (valor) {
+                                  setState(() => instrumentoElegido = valor);
+                                },
+                              ),
+                            ),
+
+                            const SizedBox(height: 24),
+
+                            // --- NUEVO: SECCIÓN SELECCIONAR VOZ ---
+                            const Text(
+                              'Seleccionar Voz',
+                              style: TextStyle(color: Colors.white, fontSize: 18),
+                            ),
+                            const SizedBox(height: 16),
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 12),
+                              decoration: BoxDecoration(
+                                color: Colores.botonClaro,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: DropdownButton<String>(
+                                value: vozElegida,
+                                hint: const Text('Seleccionar voz', style: TextStyle(color: Colors.black54)),
+                                isExpanded: true,
+                                underline: const SizedBox(),
+                                dropdownColor: Colores.botonClaro,
+                                items: [
+                                  for (String voz in voces)
+                                    DropdownMenuItem(value: voz, child: Text(voz)),
+                                ],
+                                onChanged: (valor) {
+                                  setState(() => vozElegida = valor);
+                                },
+                              ),
+                            ),
+
+                            const SizedBox(height: 40),
+
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colores.botonClaro,
@@ -176,18 +252,18 @@ class _InventarioPartiturasState extends State<InventarioPartituras> {
                 ),
               ),
               // Texto inferior fuera del bloque
-               Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
-                    child: Text(
-                      'BANDA SINFONICA SAN MIGUEL DE GARZÓN',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colores.colorLetra1,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+                child: Text(
+                  'BANDA SINFONICA SAN MIGUEL DE GARZÓN',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colores.colorLetra1,
+                    fontWeight: FontWeight.bold,
                   ),
+                ),
+              ),
             ],
           ),
         ),
