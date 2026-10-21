@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/eventos/pantalla_evento.dart';
 import 'package:frontend/screens/multimedia/multimedia.dart';
+import 'package:frontend/screens/pantalla_generar_codigo.dart';
 import 'package:frontend/themes/colores.dart';
 // Importaciones de tus pantallas
 import 'inventario-partituras/inventario_partituras.dart';
 import 'inventario-instrumentos/inventario_instrumentos.dart';
 import 'pantalla_perfil.dart';
+// TODO: Importa aquí tu pantalla de generar código cuando la crees, por ejemplo:
+// import 'generar_codigo_pantalla.dart';
 
 class MenuUsuario extends StatelessWidget {
   const MenuUsuario({super.key});
@@ -37,18 +40,15 @@ class MenuUsuario extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent, // <- CAMBIADO A TRANSPARENTE
+      backgroundColor: Colors.transparent,
       body: Stack(
         children: [
-          // CAPA 1: cubre toda la pantalla, al tocarla se cierra el menú
           Positioned.fill(
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () => Navigator.pop(context),
             ),
           ),
-
-          // CAPA 2: el cuadro oscuro con las opciones (encima de la capa 1)
           SafeArea(
             child: Align(
               alignment: Alignment.topCenter,
@@ -56,7 +56,7 @@ class MenuUsuario extends StatelessWidget {
                 margin: const EdgeInsets.all(10),
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 decoration: BoxDecoration(
-                  color: Colores.bloqueOscuro, // El cuadro mantiene su color verde
+                  color: Colores.bloqueOscuro,
                   borderRadius: BorderRadius.circular(24),
                 ),
                 child: Column(
@@ -66,6 +66,8 @@ class MenuUsuario extends StatelessWidget {
                     opcionMenu(context, 'Inventario- Partituras', const InventarioPartituras()),
                     opcionMenu(context, 'Multimedia', const MultimediaPantalla()),
                     opcionMenu(context, 'Eventos', const PantallaEventos()),
+                    // --- NUEVA OPCIÓN PARA EL ADMIN ---
+                    opcionMenu(context, 'Generar Código de Registro', const PantallaGenerarCodigo()),
                     opcionMenu(context, 'Perfil', const PantallaPerfil()),
                   ],
                 ),

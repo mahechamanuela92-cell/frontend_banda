@@ -5,6 +5,7 @@ import 'package:frontend/screens/inventario-partituras/inventario_partituras.dar
 import 'package:frontend/screens/multimedia/multimedia.dart';
 import 'package:frontend/screens/pantalla_perfil.dart';
 import 'package:frontend/themes/colores.dart';
+// TODO: Importa aquí tu pantalla de generar código cuando la crees
 
 class MenuUsuario extends StatelessWidget {
   const MenuUsuario({super.key});
@@ -36,10 +37,9 @@ class MenuUsuario extends StatelessWidget {
                     const MultimediaPantalla()),
                 _item(context, 'Eventos',
                     const PantallaEventos()),
-                _item(context, 'Eventos', null),
-                const PantallaEventos(),
-                _item(context, 'Perfil', null),
-                const PantallaPerfil()
+                // --- NUEVA OPCIÓN PARA EL ADMIN ---
+                _item(context, 'Generar Código de Registro', null), // Cambia 'null' por la pantalla destino cuando la tengas
+                _item(context, 'Perfil', const PantallaPerfil()),
               ],
             ),
           ),
@@ -61,7 +61,6 @@ class MenuUsuario extends StatelessWidget {
         Navigator.pop(context); // Cierra el Drawer
 
         if (destino != null) {
-          // Ejecuta la navegación justo después de cerrar el Drawer
           Future.microtask(() {
             if (context.mounted) {
               Navigator.push(

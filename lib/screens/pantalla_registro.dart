@@ -1,121 +1,385 @@
 import 'package:flutter/material.dart';
-import '../themes/colores.dart';
 import '../widgets/fondos.dart';
 
-// Pantalla para registrar un integrante nuevo
-class PantallaRegistro extends StatelessWidget {
+class PantallaRegistro extends StatefulWidget {
   const PantallaRegistro({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    // Estilo del título amarillo, lo usamos arriba y abajo
-    final estiloTitulo = TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.bold,
-      color: Colores.amarillo,
-    );
+  State<PantallaRegistro> createState() => _PantallaRegistroState();
+}
 
+class _PantallaRegistroState extends State<PantallaRegistro> {
+  // Controladores para capturar la información
+  final TextEditingController _nombreController = TextEditingController();
+  final TextEditingController _numDocumentoController = TextEditingController();
+  final TextEditingController _telefonoController = TextEditingController();
+  final TextEditingController _correoController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _codigoController = TextEditingController();
+
+  // Variable para el tipo de documento seleccionado
+  String? _tipoDocumentoElegido;
+  final List<String> _tiposDocumento = [
+    'Cédula de Ciudadanía',
+    'Tarjeta de Identidad',
+    'Cédula de Extranjería',
+    'Pasaporte'
+  ];
+
+  @override
+  void dispose() {
+    _nombreController.dispose();
+    _numDocumentoController.dispose();
+    _telefonoController.dispose();
+    _correoController.dispose();
+    _passwordController.dispose();
+    _codigoController.dispose();
+    super.dispose();
+  }
+
+  void _registrarUsuario() {
+    // Aquí puedes conectar la llamada a tu backend (/register)
+    // usando los valores de los controladores y _tipoDocumentoElegido
+    final nombre = _nombreController.text.trim();
+    final tipoDoc = _tipoDocumentoElegido;
+    final numDoc = _numDocumentoController.text.trim();
+    final telefono = _telefonoController.text.trim();
+    final correo = _correoController.text.trim();
+    final password = _passwordController.text.trim();
+    final codigo = _codigoController.text.trim();
+
+    if (nombre.isEmpty || tipoDoc == null || numDoc.isEmpty || telefono.isEmpty || correo.isEmpty || password.isEmpty || codigo.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Por favor, completa todos los campos y el código')),
+      );
+      return;
+    }
+
+    // TODO: Implementar la petición HTTP POST hacia tu backend
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: FondoBase(
         child: SafeArea(
           child: SingleChildScrollView(
-            padding: EdgeInsets.all(25),
-            child: Column(
-              children: [
-                Image.asset('assets/images/fondo_login1.png', height: 150),
-                SizedBox(height: 10),
-                Text('Registrar Integrantes', style: estiloTitulo),
-                SizedBox(height: 30),
-                CampoRegistro(texto: 'Nombre'),
-                SizedBox(height: 20),
-                CampoRegistro(texto: 'Correo'),
-                SizedBox(height: 20),
-                CampoRegistro(texto: 'Contraseña', oculto: true),
-                SizedBox(height: 30),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colores.botonClaro,
-                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 10), 
+                  Center(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12.0),
+                      child: Image.asset(
+                        "assets/images/fondo_login1.png",
+                        fit: BoxFit.contain,
+                        height: 130, 
+                      ),
                     ),
                   ),
-                  onPressed: () {
-                    // Aquí después guardas el integrante
-                  },
-                  child: Text(
-                    'REGISTRAR',
+
+                  const SizedBox(height: 15),
+
+                  const Text(
+                    'REGISTRO DE MÚSICO',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFFE2BC65),
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  // --- CAMPO NOMBRE COMPLETO ---
+                  _crearCampoTexto(
+                    controller: _nombreController,
+                    hintText: 'Nombre Completo',
+                    icon: Icons.person,
+                  ),
+
+                  const SizedBox(height: 14),
+
+                  // --- CAMPO TIPO DE DOCUMENTO (Dropdown estilizado) ---
+                  Container(
+                    width: double.infinity,
+                    height: 55,
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [
+                          Color(0xFFB3F0EC),
+                          Color(0xFF8AE1DC),
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
+                      borderRadius: BorderRadius.circular(30.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    alignment: Alignment.center,
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: _tipoDocumentoElegido,
+                        hint: const Row(
+                          children: [
+                            Icon(Icons.badge, color: Color(0xFF0F4C5C), size: 22),
+                            SizedBox(width: 15),
+                            Text(
+                              'Tipo de Documento',
+                              style: TextStyle(
+                                color: Color(0xFF0F4C5C),
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        icon: const Icon(Icons.arrow_drop_down, color: Color(0xFF0F4C5C)),
+                        isExpanded: true,
+                        dropdownColor: const Color(0xFFB3F0EC),
+                        style: const TextStyle(
+                          color: Color(0xFF0F4C5C),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        items: _tiposDocumento.map((String tipo) {
+                          return DropdownMenuItem<String>(
+                            value: tipo,
+                            child: Text(tipo),
+                          );
+                        }).toList(),
+                        onChanged: (String? nuevoValor) {
+                          setState(() {
+                            _tipoDocumentoElegido = nuevoValor;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 14),
+
+                  // --- CAMPO NÚMERO DE DOCUMENTO ---
+                  _crearCampoTexto(
+                    controller: _numDocumentoController,
+                    hintText: 'Número de Documento',
+                    icon: Icons.confirmation_number,
+                    keyboardType: TextInputType.number,
+                  ),
+
+                  const SizedBox(height: 14),
+
+                  // --- CAMPO TELÉFONO ---
+                  _crearCampoTexto(
+                    controller: _telefonoController,
+                    hintText: 'Teléfono',
+                    icon: Icons.phone,
+                    keyboardType: TextInputType.phone,
+                  ),
+
+                  const SizedBox(height: 14),
+
+                  // --- CAMPO CORREO ---
+                  _crearCampoTexto(
+                    controller: _correoController,
+                    hintText: 'Correo',
+                    icon: Icons.email,
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+
+                  const SizedBox(height: 14),
+
+                  // --- CAMPO CONTRASEÑA ---
+                  _crearCampoTexto(
+                    controller: _passwordController,
+                    hintText: 'Contraseña',
+                    icon: Icons.vpn_key,
+                    obscureText: true,
+                  ),
+
+                  const SizedBox(height: 14),
+
+                  // --- CAMPO CÓDIGO DE INVITACIÓN (ADMIN) ---
+                  _crearCampoTexto(
+                    controller: _codigoController,
+                    hintText: 'Código de Registro (6 dígitos)',
+                    icon: Icons.security,
+                    keyboardType: TextInputType.number,
+                  ),
+
+                  const SizedBox(height: 25),
+
+                  // --- BOTÓN REGISTRARSE ---
+                  Container(
+                    width: double.infinity,
+                    height: 55,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.3),
+                          blurRadius: 10,
+                          offset: const Offset(0, 5),
+                        ),
+                      ],
+                    ),
+                    child: ElevatedButton(
+                      onPressed: _registrarUsuario,
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.zero,
+                        backgroundColor: Colors.transparent,
+                        shadowColor: Colors.transparent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                      ),
+                      child: Ink(
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            colors: [
+                              Color(0xFFB3F0EC),
+                              Color(0xFF8AE1DC),
+                            ],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                          ),
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        child: Container(
+                          alignment: Alignment.center,
+                          constraints: const BoxConstraints(minHeight: 55),
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.person_add,
+                                color: Color(0xFF0F4C5C),
+                                size: 24,
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                'REGISTRARSE',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w800,
+                                  color: Color(0xFF0F4C5C),
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  // --- VOLVER AL LOGIN ---
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text(
+                      '¿Ya tienes una cuenta? Inicia Sesión',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  // --- TEXTO INFERIOR ---
+                  const Text(
+                    'BANDA SINFONICA SAN MIGUEL DE GARZÓN',
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                      color: Color(0xFFE2BC65),
+                      height: 1.3,
                     ),
                   ),
-                ),
-                SizedBox(height: 40),
-                Text(
-                  'BANDA SINFONICA SAN MIGUEL DE GARZÓN',
-                  textAlign: TextAlign.center,
-                  style: estiloTitulo.copyWith(fontSize: 20),
-                ),
-              ],
+
+                  const SizedBox(height: 15),
+                ],
+              ),
             ),
           ),
         ),
       ),
     );
   }
-}
 
-// Caja clara con nota musical, campo de texto y línea de colores abajo
-class CampoRegistro extends StatelessWidget {
-  final String texto;
-  final bool oculto;
-
-  const CampoRegistro({super.key, required this.texto, this.oculto = false});
-
-  @override
-  Widget build(BuildContext context) {
+  // Método auxiliar reutilizable para los inputs de texto
+  Widget _crearCampoTexto({
+    required TextEditingController controller,
+    required String hintText,
+    required IconData icon,
+    bool obscureText = false,
+    TextInputType keyboardType = TextInputType.text,
+  }) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      width: double.infinity,
+      height: 55,
       decoration: BoxDecoration(
-        color: Colores.botonClaro,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Icon(Icons.music_note, color: Colors.black, size: 20),
-          SizedBox(width: 8),
-          Expanded(
-            child: Column(
-              children: [
-                TextField(
-                  obscureText: oculto,
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  decoration: InputDecoration(
-                    hintText: texto,
-                    hintStyle: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    isDense: true,
-                    border: InputBorder.none,
-                  ),
-                ),
-                // Línea con degradado de amarillo a morado
-                Container(
-                  height: 2,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Colores.amarillo, Colors.purple],
-                    ),
-                  ),
-                ),
-              ],
-            ),
+        gradient: const LinearGradient(
+          colors: [
+            Color(0xFFB3F0EC),
+            Color(0xFF8AE1DC),
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+        borderRadius: BorderRadius.circular(30.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            blurRadius: 8,
+            offset: const Offset(0, 4),
           ),
         ],
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      alignment: Alignment.center,
+      child: TextField(
+        controller: controller,
+        obscureText: obscureText,
+        keyboardType: keyboardType,
+        style: const TextStyle(
+          color: Color(0xFF0F4C5C),
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+        ),
+        decoration: InputDecoration(
+          icon: Icon(
+            icon,
+            color: const Color(0xFF0F4C5C),
+            size: 22,
+          ),
+          hintText: hintText,
+          hintStyle: const TextStyle(
+            color: Color(0xFF0F4C5C),
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+          border: InputBorder.none,
+          contentPadding: const EdgeInsets.symmetric(vertical: 12),
+        ),
       ),
     );
   }
