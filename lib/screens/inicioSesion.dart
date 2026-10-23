@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:frontend/screens/pantalla_inicio.dart';
 import 'package:flutter/material.dart';
 import '../widgets/fondos.dart';
@@ -10,9 +12,22 @@ class InicioSesion extends StatefulWidget {
 }
 
 class _InicioSesionState extends State<InicioSesion> {
+  // 👈 AGREGA ESTOS CONTROLADORES AQUÍ ARRIBA
+  final TextEditingController _correoController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _nombreController = TextEditingController();
+  bool _cargando = false;
+  @override
+void dispose() {
+  _correoController.dispose();
+  _passwordController.dispose();
+  super.dispose();
+}
   // Variables para controlar el cambio de color al hacer clic
   Color _colorRegistrarse = Colors.white;
   Color _colorOlvido = Colors.white;
+
+  get _iniciarSesion => null;
 
   @override
   Widget build(BuildContext context) {
@@ -52,29 +67,31 @@ class _InicioSesionState extends State<InicioSesion> {
                   const SizedBox(height: 25),
 
                   // --- CAMPO NOMBRE ---
-                  _crearCampoTexto(
-                    hintText: 'Nombre',
-                    icon: Icons.people,
-                  ),
+                _crearCampoTexto(
+                  controller: _nombreController, // 👈 Agrégale esta línea aquí también
+                  hintText: 'Nombre',
+                  icon: Icons.people,
+                ),
 
                   const SizedBox(height: 16),
 
                   // --- CAMPO CORREO ---
-                  _crearCampoTexto(
-                    hintText: 'Correo',
-                    icon: Icons.email,
-                    keyboardType: TextInputType.emailAddress,
-                  ),
+                _crearCampoTexto(
+                  controller: _correoController, // 👈 Agrégale esta línea
+                  hintText: 'Correo',
+                  icon: Icons.email,
+                  keyboardType: TextInputType.emailAddress,
+                ),
 
                   const SizedBox(height: 16),
 
                   // --- CAMPO CONTRASEÑA ---
                   _crearCampoTexto(
-                    hintText: 'Contraseña',
-                    icon: Icons.vpn_key,
-                    obscureText: true,
-                  ),
-
+                  controller: _passwordController, // 👈 Agrégale esta línea
+                  hintText: 'Contraseña',
+                  icon: Icons.vpn_key,
+                  obscureText: true,
+                ),
                   const SizedBox(height: 30),
 
                   // --- BOTÓN INICIAR SESIÓN ---
@@ -92,12 +109,7 @@ class _InicioSesionState extends State<InicioSesion> {
                       ],
                     ),
                     child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const Inicio()),
-                        );
-                      },
+                      onPressed: _cargando ? null : _iniciarSesion, // 👈 Un solo onPressed limpio
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.zero,
                         backgroundColor: Colors.transparent,
@@ -219,7 +231,7 @@ class _InicioSesionState extends State<InicioSesion> {
     required String hintText,
     required IconData icon,
     bool obscureText = false,
-    TextInputType keyboardType = TextInputType.text,
+    TextInputType keyboardType = TextInputType.text, required TextEditingController controller,
   }) {
     return Container(
       width: double.infinity,

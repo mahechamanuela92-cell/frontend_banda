@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import '../widgets/fondos.dart';
 
@@ -37,9 +39,9 @@ class _PantallaRegistroState extends State<PantallaRegistro> {
     super.dispose();
   }
 
-  void _registrarUsuario() {
-    // Aquí puedes conectar la llamada a tu backend (/register)
-    // usando los valores de los controladores y _tipoDocumentoElegido
+  Future<void> _registrarUsuario() async {
+    print("¡Botón presionado correctamente!");
+
     final nombre = _nombreController.text.trim();
     final tipoDoc = _tipoDocumentoElegido;
     final numDoc = _numDocumentoController.text.trim();
@@ -48,14 +50,57 @@ class _PantallaRegistroState extends State<PantallaRegistro> {
     final password = _passwordController.text.trim();
     final codigo = _codigoController.text.trim();
 
+    print("Intentando registrar a: $nombre, Correo: $correo, Código: $codigo");
+
     if (nombre.isEmpty || tipoDoc == null || numDoc.isEmpty || telefono.isEmpty || correo.isEmpty || password.isEmpty || codigo.isEmpty) {
+      print("¡Faltan campos por llenar!");
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Por favor, completa todos los campos y el código')),
       );
       return;
     }
 
-    // TODO: Implementar la petición HTTP POST hacia tu backend
+    try {
+      final url = Uri.parse('http://localhost:3000/api/auth/register');
+      print("Conectando a la URL: $url");
+
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'nombre': nombre,
+          'tipo_documento': tipoDoc,
+          'numero_documento': numDoc,
+          'telefono': telefono,
+          'email': correo,
+          'password': password,
+          'codigoInvitacion': codigo,
+        }),
+      ).timeout(const Duration(seconds: 5));
+
+      print("Código de respuesta del servidor: ${response.statusCode}");
+      print("Respuesta: ${response.body}");
+
+      final data = jsonDecode(response.body);
+
+      if (!mounted) return;
+
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('¡Registro exitoso! Ya puedes iniciar sesión.')),
+        );
+        Navigator.pop(context); // Vuelve al login
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(data['error'] ?? 'Error al registrarse')),
+        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error de conexión con el servidor: $e')),
+      );
+    }
   }
 
   @override
@@ -104,7 +149,7 @@ class _PantallaRegistroState extends State<PantallaRegistro> {
 
                   const SizedBox(height: 14),
 
-                  // --- CAMPO TIPO DE DOCUMENTO (Dropdown estilizado) ---
+                  // --- CAMPO TIPO DE DOCUMENTO ---
                   Container(
                     width: double.infinity,
                     height: 55,
@@ -210,7 +255,7 @@ class _PantallaRegistroState extends State<PantallaRegistro> {
 
                   const SizedBox(height: 14),
 
-                  // --- CAMPO CÓDIGO DE INVITACIÓN (ADMIN) ---
+                  // --- CAMPO CÓDIGO DE INVITACIÓN ---
                   _crearCampoTexto(
                     controller: _codigoController,
                     hintText: 'Código de Registro (6 dígitos)',
